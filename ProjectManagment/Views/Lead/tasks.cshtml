@@ -1,0 +1,43 @@
+﻿@model List<ProjectManagment.ViewModels.TaskViewModel>
+
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+<h1>Tasks</h1>
+
+<div>
+    <button class="btn btn-primary">
+        <a asp-action="AddTask" asp-controller="Lead" asp-route-Id="@ViewBag.ProjectId">Add Task</a>
+    </button>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Developer Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.Name</td>
+                <td>@task.Describtion</td>
+                <td>@(task.StartDate.HasValue ? task.StartDate.Value.ToString("yyyy-MM-dd") : "")</td>
+                <td>@(task.DeadLine.HasValue ? task.DeadLine.Value.ToString("yyyy-MM-dd") : "")</td>
+                <td>@(task.Status.HasValue ? (task.Status.Value ? "Completed" : "Not Completed") : "Not Completed")</td>
+                <td>@task.UserName</td>
+                <td><button><a asp-action="EditTask" asp-controller="Lead" asp-route-Id="@task.Id">Edit</a></button>      <button><a asp-action="DeleteTask" asp-controller="Lead" asp-route-Id="@task.Id">Delete</a></button></td>
+            </tr>
+        }
+    </tbody>
+</table>
